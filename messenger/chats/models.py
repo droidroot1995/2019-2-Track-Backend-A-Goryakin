@@ -9,12 +9,21 @@ class Chat(models.Model):
     topic = models.TextField(max_length=64)
     last_message = models.TextField(max_length=256)
     
+    class Meta:
+        verbose_name = 'Чат'
+        verbose_name_plural = 'Чаты'
+    
 
 class Message(models.Model):
     chat = models.ForeignKey(to=Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     content = models.TextField(max_length=256)
     added_at = models.DateTimeField()
+    
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+        ordering = ['-added_at']
     
 
 class Attachment(models.Model):
@@ -24,9 +33,17 @@ class Attachment(models.Model):
     att_type = models.TextField(max_length=64)
     url = models.TextField(max_length=128)
     
+    class Meta:
+        verbose_name = 'Вложение'
+        verbose_name_plural = 'Вложения'
+    
 
 class Member(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     chat = models.ForeignKey(to=Chat, on_delete=models.CASCADE)
     new_messages = models.IntegerField()
     last_read_message = models.ForeignKey(to=Message, on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Участник'
+        verbose_name_plural = 'Участники'
