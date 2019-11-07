@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
+from users.models import User
 # Create your views here.
 
 
@@ -39,5 +40,16 @@ def contacts_list(request):
                 'last_online': 'last online 20 minutes ago'
             }
         ]})
+    else:
+        return HttpResponseNotAllowed(['GET'])
+    
+    
+@csrf_exempt
+def search_users(request, name, limit):
+    if request.method == 'GET':
+        users = User.objects.filter(username__contains=name)[:limit]
+        
+        # return JsonResponse({'users': users})
+        return JsonResponse()
     else:
         return HttpResponseNotAllowed(['GET'])
