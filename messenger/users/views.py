@@ -1,55 +1,38 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseNotAllowed
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from users.models import User
+from django.views.decorators.http import require_GET, require_POST
+from django.apps import apps
 # Create your views here.
 
 
 @csrf_exempt
+@require_GET
 def index(request):
-    if request.method == 'GET':
-        return render(request, 'users_index.html')
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    return render(request, 'users_index.html')
 
 
 @csrf_exempt
+@require_GET
 def profile_details(request, pk):
-    if request.method == 'GET':
-        return JsonResponse({'profile': {
-            'name': 'Name',
-            'avatar': 'avatar',
-            'last_online': 'last online'
-        }})
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    User = apps.get_model('users', 'User')
+    user = User.objects.filter(id=pk).values('id', 'username', 'first_name', 'avatar').first()
+    return JsonResponse({'profile': user})
 
 
 @csrf_exempt
+@require_GET
 def contacts_list(request):
-    if request.method == 'GET':
-        return JsonResponse({'contacts': [
-            {
-                'name': 'Anton',
-                'avatar': 'http://localhost/16.jpg',
-                'last_online': 'last online 2 hours ago'
-            },
-            {
-                'name': 'Alena',
-                'avatar': 'http://localhost/17.jpg',
-                'last_online': 'last online 20 minutes ago'
-            }
-        ]})
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    User = apps.get_model('users', 'User')
+    
+    users= User.objects.all().values('id', 'username', 'first_name', 'avatar')
+    return JsonResponse({'contacts': list(users)})
     
     
 @csrf_exempt
-def search_users(request, name, limit):
-    if request.method == 'GET':
-        users = User.objects.filter(username__contains=name)[:limit]
-        
-        # return JsonResponse({'users': users})
-        return JsonResponse()
-    else:
-        return HttpResponseNotAllowed(['GET'])
+@require_GET
+def search_users(request):
+    User = apps.get_model('users', 'User')
+    
+    users = User.objects.filter(username__contains=request.GET['name']).values('id', 'username', 'first_name', 'avatar')[:int(request.GET['limit'])]
+    return JsonResponse({'users': list(users)})

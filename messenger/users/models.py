@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    avatar = models.CharField(max_length=128)
+    avatar = models.CharField(max_length=128, blank=True)
     
     class Meta:
         verbose_name = 'Пользователь'
