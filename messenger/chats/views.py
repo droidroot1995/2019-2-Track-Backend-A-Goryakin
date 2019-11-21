@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http  import require_GET, require_POST
-from chats.forms import ChatForm, MemberForm, MessageForm
+from chats.forms import ChatForm, MemberForm, MessageForm, AttachmentForm
 from django.apps import apps
+from django.utils import timezone
 
 # Create your views here.
 @csrf_exempt
@@ -119,10 +120,9 @@ def send_message(request):
     
     form = MessageForm(request.POST)
     
-    '''TODO: добвить увеличение счетчиканепрочитанных сообщений и обновление последненго прочитанного сообщения'''
-    
     if form.is_valid():
         message = form.save()
+        
         msg = {'id': message.id, 'chat_id': message.chat.id, 'user_id': message.user.id, 'content': message.content, 'added_at': message.added_at}
         
         chat = Chat.objects.filter(id=message.chat.id).first()
@@ -149,3 +149,40 @@ def chat_messages_list(request):
     
     messages = Message.objects.filter(chat_id=int(request.GET['chat_id'])).values('id', 'chat_id', 'user_id', 'content', 'added_at')
     return JsonResponse({'messages': list(messages)})
+
+@csrf_exempt
+@require_POST
+def upload_file(request):
+    Attachment = apps.get_model('chats', 'Attachment')
+    
+    form = AttachmentForm(request.POST, request.FILES)
+    
+    if form.is_valid():
+        attachment = form.save()
+        
+        attachment_json = {'id': attachment.id, 
+                           'chat_id': attachment.chat.id, 
+                           'user_id': attachment.user.id, 
+                           'message_id': attachment.message.id, 
+                           'att_type': attachment.att_type,
+                           'url': attachment.url.url.replace('http://hb.bizmrg.com/track-goryakin/', '/chats/files/')}
+        
+        return JsonResponse({'attachment': attachment_json})
+    
+    
+    return JsonResponse({'errors': form.errors}, status=400)
+
+@csrf_exempt
+@require_GET
+def protected_file(request):
+    if request.user.is_authenticated:
+        url = request.path.replace('/chats/files', '/protected')
+        response = HttpResponse(status=200)
+        response['X-Accel-Redirect'] = url
+        
+        if 'Expires' in request.GET.keys():
+            response['X-Accel-Expires'] = request.GET['Expires']
+        response['Content-type'] = ''
+        return response
+    else:
+        return HttpResponse('<h1>File not found</h1>', status=404)

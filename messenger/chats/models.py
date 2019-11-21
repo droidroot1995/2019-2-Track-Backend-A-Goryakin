@@ -17,7 +17,7 @@ class Message(models.Model):
     chat = models.ForeignKey(to=Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     content = models.TextField(max_length=256)
-    added_at = models.DateTimeField()
+    added_at = models.DateTimeField(null=True, auto_now_add=True)
     
     class Meta:
         verbose_name = 'Сообщение'
@@ -30,7 +30,7 @@ class Attachment(models.Model):
     user = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     message = models.ForeignKey(to=Message, on_delete=models.CASCADE)
     att_type = models.TextField(max_length=64)
-    url = models.TextField(max_length=128)
+    url = models.FileField(upload_to='attachments/')
     
     class Meta:
         verbose_name = 'Вложение'

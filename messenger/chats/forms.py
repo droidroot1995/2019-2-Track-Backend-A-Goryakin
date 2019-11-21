@@ -11,7 +11,7 @@ class ChatForm(forms.ModelForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ['chat', 'user', 'content', 'added_at']
+        fields = ['chat', 'user', 'content']
         
         
 class AttachmentForm(forms.ModelForm):

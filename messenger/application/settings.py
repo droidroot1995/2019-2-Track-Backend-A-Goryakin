@@ -87,6 +87,14 @@ DATABASES = {
     }
 }
 
+# File storage
+
+AWS_S3_ENDPOINT_URL = 'http://hb.bizmrg.com'
+AWS_ACCESS_KEY_ID = 'oNjWxBKB4LSPKSAq4oCBwd'
+AWS_SECRET_ACCESS_KEY = '8p8VQ7qqxaZfNk7Tph89NorDuCWhHggspBoQjPzkT3Rb'
+AWS_STORAGE_BUCKET_NAME = 'track-goryakin'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -114,7 +122,7 @@ AUTH_USER_MODEL = "users.User"
 
 LANGUAGE_CODE = 'ru-Ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
