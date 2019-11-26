@@ -3,6 +3,6 @@ from users.models import User
 # Register your models here.
 
 class UserAdmin(admin.ModelAdmin):
-    pass
+    list_display=('username',)
 
 admin.site.register(User, UserAdmin)

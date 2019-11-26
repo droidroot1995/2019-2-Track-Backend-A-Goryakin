@@ -4,16 +4,20 @@ from chats.models import Chat, Member, Message, Attachment
 
 
 class ChatAdmin(admin.ModelAdmin):
-    pass
+    list_display=('id', 'topic')
+    #pass
 
 class MessageAdmin(admin.ModelAdmin):
-    pass
+    list_display=('id', 'chat_id', 'user_id')
+    #pass
 
 class AttachmentAdmin(admin.ModelAdmin):
-    pass
+    list_display=('id', 'chat_id', 'message_id', 'user_id')
+    #pass
 
 class MemberAdmin(admin.ModelAdmin):
-    pass
+    list_display=('id', 'chat_id', 'user_id')
+    #pass
     
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)

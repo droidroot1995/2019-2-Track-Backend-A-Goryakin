@@ -11,16 +11,16 @@ class ChatForm(forms.ModelForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ['chat', 'user', 'content']
+        fields = ['chat', 'content']
         
         
 class AttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
-        fields = ['chat', 'user', 'message', 'att_type', 'url']
+        fields = ['chat', 'message', 'att_type', 'url']
         
 
 class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
-        fields = ['user', 'chat', 'new_messages', 'last_read_message']
+        fields = ['chat', 'new_messages', 'last_read_message']

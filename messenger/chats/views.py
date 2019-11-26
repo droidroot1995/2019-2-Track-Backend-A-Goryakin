@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http  import require_GET, require_POST
+from django.contrib.auth.decorators import login_required
 from chats.forms import ChatForm, MemberForm, MessageForm, AttachmentForm
 from django.apps import apps
 from django.utils import timezone
@@ -9,27 +10,31 @@ from django.utils import timezone
 # Create your views here.
 @csrf_exempt
 @require_GET
+@login_required
 def index(request):
     return render(request, 'chats_index.html')
 
 
 @csrf_exempt
 @require_GET
+@login_required
 def chat_detail(request, pk):
     return JsonResponse({'test' : 'App'})
 
 
 @csrf_exempt
 @require_GET
-def chat_page(request, chat_id):
+@login_required
+def chat_page(request):
     Chat = apps.get_model('chats', 'Chat')
     
-    chat = Chat.objects.filter(id=chat_id).values('id', 'is_group_chat', 'topic', 'last_message').first()
+    chat = Chat.objects.filter(id=int(request.GET['chat_id'])).values('id', 'is_group_chat', 'topic', 'last_message').first()
     return JsonResponse({'chat': chat})
 
 
 @csrf_exempt
 @require_GET
+@login_required
 def chat_list(request):
     Chat = apps.get_model('chats', 'Chat')
     
@@ -39,11 +44,12 @@ def chat_list(request):
     
 @csrf_exempt
 @require_POST
+@login_required
 def create_personal_chat(request):
     Member = apps.get_model('chats', 'Member')
     Chat = apps.get_model('chats', 'Chat')
         
-    uid  = int(request.POST['user_id'])
+    uid  = request.user.id
     target_user_id = int(request.POST['target_user_id'])
     
     member1_chat_set = set(Member.objects.filter(user_id=uid).values_list('chat_id'))
@@ -71,12 +77,13 @@ def create_personal_chat(request):
     
 @csrf_exempt
 @require_GET
+@login_required
 def user_chat_list(request):
     Member = apps.get_model('chats', 'Member')
     Chat = apps.get_model('chats', 'Chat')
     
     chat_lst = []
-    members = Member.objects.filter(user_id=request.GET['uid'])
+    members = Member.objects.filter(user_id=request.user.id)
     
     for member in members:
         chat = Chat.objects.filter(id=member.chat_id).first()
@@ -88,6 +95,7 @@ def user_chat_list(request):
 
 @csrf_exempt
 @require_POST
+@login_required
 def read_message(request):
     Member = apps.get_model('chats', 'Member')
     Message = apps.get_model('chats', 'Message')
@@ -95,7 +103,7 @@ def read_message(request):
     message = Message.objects.filter(id=int(request.POST['message_id'])).first()
     
     if message:
-        member = Member.objects.filter(user_id=int(request.POST['user_id']), chat_id=message.chat_id).first()
+        member = Member.objects.filter(user_id=request.user.id, chat_id=message.chat_id).first()
         
         if member:
             
@@ -114,14 +122,19 @@ def read_message(request):
 
 @csrf_exempt
 @require_POST
+@login_required
 def send_message(request):
     Member = apps.get_model('chats', 'Member')
     Chat = apps.get_model('chats', 'Chat')
+    Message = apps.get_modle('chats', 'Message')
     
     form = MessageForm(request.POST)
     
     if form.is_valid():
-        message = form.save()
+        #message = form.save()
+        
+        message = Message.objects.create(chat_id=form.cleaned_data['chat'], user_id=request.user.id, 
+                                         content=form.cleaned_data['content'], added_at=form.cleaned_data['added_at'])
         
         msg = {'id': message.id, 'chat_id': message.chat.id, 'user_id': message.user.id, 'content': message.content, 'added_at': message.added_at}
         
@@ -144,6 +157,7 @@ def send_message(request):
 
 @csrf_exempt
 @require_GET
+@login_required
 def chat_messages_list(request):
     Message = apps.get_model('chats', 'Message')
     
@@ -152,13 +166,17 @@ def chat_messages_list(request):
 
 @csrf_exempt
 @require_POST
+@login_required
 def upload_file(request):
     Attachment = apps.get_model('chats', 'Attachment')
     
     form = AttachmentForm(request.POST, request.FILES)
     
     if form.is_valid():
-        attachment = form.save()
+        #attachment = form.save()
+        
+        attachment = Attachment.objects.create(chat_id=form.cleaned_data['chat'], user_id=request.user.id, message_id=form.cleaned_data['message'],
+                                               att_type=form.cleaned_data['att_type'], url=form.cleaned_data['url'])
         
         attachment_json = {'id': attachment.id, 
                            'chat_id': attachment.chat.id, 
@@ -174,6 +192,7 @@ def upload_file(request):
 
 @csrf_exempt
 @require_GET
+@login_required
 def protected_file(request):
     if request.user.is_authenticated:
         url = request.path.replace('/chats/files', '/protected')

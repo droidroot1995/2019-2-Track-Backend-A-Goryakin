@@ -27,6 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTHENTICATION_BACKENDS =[
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Application definition
 
@@ -39,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'chats',
+    'main',
+    'social_django',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -134,7 +146,37 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
 STATIC_URL = '/static/'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '777955572665542' # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '565b816281f29463c126fe9c4213d59c' # App Secret
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'locale' : 'ru_RU',
+    'fields' : 'id, name, email, age_range',
+}
+
+SOCIAL_AUTH_INSTAGRAM_KEY = '2665167783552204'        #Client ID
+SOCIAL_AUTH_INSTAGRAM_SECRET = '5bfcfb904cbb1d94c2aca878dc1250a6'  #Client SECRET
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7224092'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'yrdZD3UwYo6NzRRlGAk2'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+SOCIAL_AUTH_VK_PROFILE_EXTRA_PARAMS = {
+    'locale' : 'ru_RU',
+    'fields' : 'id, name, email, age_range',
+}
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
 
 try:
     from application.local_settings import *
