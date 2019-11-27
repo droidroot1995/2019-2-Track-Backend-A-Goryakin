@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block title %} Sign in {% endblock %}
 {% block content %}
 <div class="row">
     <form class="login_form" method="post" action="{% url 'legacy_login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input class="login" type="submit" value="login" />
+        {{ form|crispy }}
+
+        <input class="btn btn-primary btn-block login" type="submit" value="login" />
     </form>
+    
     <div class="row">
         <div class="col-md-8 mx-auto social-container my-2 order-md-1">
             <a href="#" class="btn btn-social-icon btn-lg btn-instagram">

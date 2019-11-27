@@ -33,9 +33,9 @@ img {
 
 .login_form {
     margin-bottom: 20px;
-    margin-left: 20%;
+    margin-left: 30%;
 }
 
 .login {
-    align-self: flex-end;
+    margin-top: 10px;
 }

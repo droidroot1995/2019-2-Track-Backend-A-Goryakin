@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'main',
     'social_django',
     'sslserver',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

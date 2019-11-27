@@ -14,20 +14,16 @@ def login(request):
     return render(request, 'login.html', context)
 
 def legacy_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    print(user)
     
-    try:
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        print(user)
-        
-        if user is not None:
-            auth_login(request, user)
-            return HttpResponseRedirect('/')
-        else:
-            return HttpResponseRedirect('/login/')
-    except:
+    if user is not None:
+        auth_login(request, user)
         return HttpResponseRedirect('/')
+
+    return HttpResponseRedirect('/')
         
 
 
