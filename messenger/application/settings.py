@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'users',
     'chats',
     'main',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,6 +64,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 ROOT_URLCONF = 'application.urls'
 
@@ -95,7 +103,7 @@ DATABASES = {
         'NAME': 'messenger',
         'USER': 'droidroot',
         'PASSWORD': '25091995',
-        'HOST':'127.0.0.1',
+        'HOST':'database',
         'PORT':'5432',
     }
 }
@@ -172,6 +180,8 @@ SOCIAL_AUTH_VK_PROFILE_EXTRA_PARAMS = {
     'locale' : 'ru_RU',
     'fields' : 'id, name, email, age_range',
 }
+
+#STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.conf import settings
 from main import views as views
 
 urlpatterns = [
@@ -28,3 +30,5 @@ urlpatterns = [
     path('social_auth/', include('social_django.urls', namespace='social')),
     path('', views.home, name='home' ),
 ]
+
+#urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
