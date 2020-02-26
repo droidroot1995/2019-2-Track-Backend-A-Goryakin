@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'social_django',
     'sslserver',
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -103,8 +105,13 @@ DATABASES = {
         'NAME': 'messenger',
         'USER': 'droidroot',
         'PASSWORD': '25091995',
-        'HOST':'database',
+        #'HOST':'database',
+        'HOST':'127.0.0.1',
         'PORT':'5432',
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
     }
 }
 
@@ -187,7 +194,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+TESTING = 'test' in sys.argv or 'jenkins' in sys.argv
 
+if TESTING:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
 
 try:
     from application.local_settings import *
