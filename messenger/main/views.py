@@ -2,11 +2,15 @@ from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.middleware.csrf import get_token
 from django.views.decorators.http  import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 from main.forms import LoginForm
 # Create your views here.
+
+def csrf(request):
+    return JsonResponse({'csrfToken': get_token(request)})
 
 def login(request):
     form = LoginForm()
@@ -14,14 +18,18 @@ def login(request):
     return render(request, 'login.html', context)
 
 def legacy_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    print(user)
     
-    if user is not None:
-        auth_login(request, user)
-        return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        form = LoginForm(data=request.POST)
+        
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+        
+            if user is not None:
+                auth_login(request, user)
+                return HttpResponseRedirect('/')
 
     return HttpResponseRedirect('/')
         

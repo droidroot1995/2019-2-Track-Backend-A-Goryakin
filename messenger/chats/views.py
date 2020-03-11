@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
+
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http  import require_GET, require_POST
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+
 from chats.forms import ChatForm, MemberForm, MessageForm, AttachmentForm
 from django.apps import apps
 from django.utils import timezone
@@ -44,6 +48,7 @@ def chat_page(request):
     return JsonResponse({'chat': chat})
 
 
+@cache_page(60*15)
 @csrf_exempt
 @require_GET
 @login_required
@@ -87,7 +92,7 @@ def create_personal_chat(request):
     
     return JsonResponse({'chat': chat_json})
     
-    
+@cache_page(60*15)    
 @csrf_exempt
 @require_GET
 @login_required
@@ -168,7 +173,7 @@ def send_message(request):
     
     return JsonResponse({'errors': form.errors}, status=400)
 
-
+@cache_page(60*15)
 @csrf_exempt
 @require_GET
 @login_required
@@ -329,12 +334,14 @@ class ChatsViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(chat, many=False)
         return Response({'chat': serializer.data})
     
+    @method_decorator(cache_page(60*15))
     @action(methods=['get'], detail=False)
     def chat_list(self, request):
         chats = self.get_queryset()
         serializer = self.get_serializer(chats, many=True)
         return Response({'chat_list': serializer.data})
     
+    @method_decorator(cache_page(60*15))
     @action(methods=['get'], detail=False)
     def user_chat_list(self, request):
         Member = apps.get_model('chats', 'Member')
@@ -376,6 +383,7 @@ class MessagesViewSet(viewsets.ModelViewSet):
     
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     
+    @method_decorator(cache_page(60*15))
     @action(methods=['get'], detail=False)
     def chat_messages_list(self, request):
         

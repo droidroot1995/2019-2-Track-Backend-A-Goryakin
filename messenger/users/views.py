@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+
 from django.apps import apps
 
 from rest_framework import viewsets
@@ -28,7 +32,7 @@ def profile_details(request):
     user = User.objects.filter(id=request.user.id).values('id', 'username', 'first_name', 'avatar').first()
     return JsonResponse({'profile': user})
 
-
+@cache_page(60*15)
 @csrf_exempt
 @require_GET
 @login_required
@@ -62,7 +66,8 @@ class UsersViewSet(viewsets.ModelViewSet):
         users = users.filter(username__contains=request.GET['name'])[:int(request.GET['limit'])]
         serializer = self.get_serializer(users, many=True)
         return Response({'users': serializer.data})
-
+    
+    @method_decorator(cache_page(60*15))
     @action(methods=['get'], detail=False)
     def contacts(self, request):
         users = self.get_queryset()

@@ -50,10 +50,10 @@ class SelenuimTest(TestCase):
     
     def setUp(self):
         self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(5)
         self.driver.maximize_window()
         self.driver.get("https://localhost:8080/")
-        time.sleep(0.5)
+        #time.sleep(0.5)
         
     def test_login_success(self):
         try:

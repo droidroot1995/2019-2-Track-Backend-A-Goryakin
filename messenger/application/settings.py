@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'sslserver',
     'crispy_forms',
     'rest_framework',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_cprofile_middleware.middleware.ProfilerMiddleware',
 ]
+
+DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -102,7 +106,7 @@ WSGI_APPLICATION = 'application.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'messenger',
+        'NAME': 'messenger_test', #'messenger',
         'USER': 'droidroot',
         'PASSWORD': '25091995',
         #'HOST':'database',
@@ -112,6 +116,15 @@ DATABASES = {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': ':memory:',
         }
+    }
+}
+
+#Cache
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 
@@ -163,7 +176,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home' #'http://localhost:3000/list'  # 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
 STATIC_URL = '/static/'
