@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+
+  overflow: hidden;
+  overflow-y: hidden;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  z-index: 0;
+}
+
+@keyframes showMessageForm {
+  from {
+    top: -100%;
+  }
+
+  to {
+    top: 0;
+  }
+}
+
+@keyframes hideMessageForm {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: -100%;
+  }
+}
+
+@keyframes showChatsList {
+  from {
+    bottom: -100%;
+  }
+
+  to {
+    bottom: 0;
+  }
+}

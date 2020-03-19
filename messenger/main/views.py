@@ -7,10 +7,17 @@ from django.middleware.csrf import get_token
 from django.views.decorators.http  import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 from main.forms import LoginForm
+
+from django.conf import settings
+import jwt
 # Create your views here.
 
 def csrf(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+def centrifugo_token(request):
+    token = jwt.encode({'sub': str(request.user.id)}, settings.CENTRIFUGE_SECRET, algorithm="HS256").decode()
+    return JsonResponse({ 'token': token })
 
 def login(request):
     form = LoginForm()

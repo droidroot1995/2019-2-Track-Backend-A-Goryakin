@@ -1,0 +1,66 @@
+.item {
+  flex: 1 1 10%;
+
+  height: 10vh;
+
+  min-height: 50px;
+  max-height: 50px;
+
+  border-bottom: 1px solid grey;
+  margin: 5px 1px 1px;
+}
+
+.icon {
+  position: relative;
+  display: block;
+  align-self: center;
+  height: 60%;
+  float: left;
+  margin: 10px 20px 10px;
+  fill: #666666;
+}
+
+.toggle {
+  position: relative;
+  display: block;
+  align-self: center;
+  height: 90%;
+  float: right;
+  fill: #ffe711;
+  margin-top: -23px;
+  margin-right: 15px;
+}
+
+.item_info {
+  position: relative;
+  display: block;
+  height: 90%;
+}
+
+.info {
+  position: relative;
+  display: block;
+  margin: 1px;
+  width: 100%;
+}
+
+.info_text {
+  position: relative;
+  display: block;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-left: 90px;
+  color: #666666;
+}
+
+.main_text {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  margin: 1px 20px 1px;
+  color: #000;
+}
+
+.block {
+  color: red;
+}

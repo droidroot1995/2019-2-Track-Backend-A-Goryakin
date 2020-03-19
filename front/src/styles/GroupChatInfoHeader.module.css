@@ -1,0 +1,246 @@
+.header {
+  flex: 1 1 auto;
+  background: #8e24aa;
+  height: 13vh;
+
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.return_link {
+  fill: white;
+}
+
+.return {
+  flex: 1 1 5%;
+  fill: white;
+  height: 50%;
+  margin: 2%;
+  position: relative;
+  align-self: center;
+}
+
+.return_button {
+  height: 100%;
+  width: 80%;
+  margin-top: 0;
+  margin-left: 10%;
+}
+
+.return:active {
+  background: #c23ee5;
+  transition: all 0.2s ease-out;
+}
+
+.add_member {
+  flex: 1 1 5%;
+
+  fill: white;
+  margin: 2%;
+  height: 50%;
+  align-self: center;
+  position: relative;
+}
+
+.add_member:active {
+  background: #c23ee5;
+  transition: all 0.2s ease-out;
+}
+
+.contact_info {
+  flex: 1 1 85%;
+
+  height: fit-content;
+  align-self: center;
+  position: relative;
+}
+
+.avatar {
+  border-radius: 60%;
+  margin: 2%;
+  display: inline-block;
+  vertical-align: middle;
+
+  position: relative;
+}
+
+.info {
+  margin: 2%;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.contact_name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0%;
+  color: #ffffff;
+  position: relative;
+}
+
+.contact_last_online {
+  color: #d1a7dd;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0%;
+  position: relative;
+}
+
+@media screen and (max-width: 320px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 7%;
+  }
+
+  .contact_info {
+    flex: 1 1 100%;
+  }
+
+  .add_member {
+    flex: 1 1 7%;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 389px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .contact_info {
+    flex: 1 1 95%;
+  }
+
+  .add_member {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 480px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .contact_info {
+    flex: 1 1 90%;
+  }
+
+  .add_member {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .contact_info {
+    flex: 1 1 90%;
+  }
+
+  .add_member {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .contact_info {
+    flex: 1 1 70%;
+  }
+
+  .add_member {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .contact_info {
+    flex: 1 1 80%;
+  }
+
+  .add_member {
+    flex: 1 1 10%;
+  }
+
+  .menu_button {
+    flex: 1 1 10%;
+    min-height: 50%;
+  }
+
+  .menu {
+    top: 100px;
+    min-width: 50px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header {
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  .return {
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  .add_member {
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  .menu_button {
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .add_member:hover {
+    fill: #d3d3d3;
+    transition: all 0.1s ease-out;
+  }
+
+  .return:hover {
+    fill: #d3d3d3;
+    transition: all 0.1s ease-out;
+  }
+}

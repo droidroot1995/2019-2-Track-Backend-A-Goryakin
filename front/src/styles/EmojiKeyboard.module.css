@@ -1,0 +1,64 @@
+.container {
+  display: block;
+  min-height: 160px;
+  min-width: 195px;
+  max-width: 195px;
+  max-height: 160px;
+
+  background-color: #f6f6f6;
+
+  z-index: 2;
+  border: 1px solid #999;
+  border-radius: 5px;
+
+  position: absolute;
+  bottom: 100px;
+  right: 20px;
+}
+
+.row {
+  width: 100%;
+  height: fit-content;
+}
+
+@media screen and (max-width: 389px) {
+  .container {
+    right: 2%;
+    bottom: 60px;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 480px) {
+  .container {
+    right: 2%;
+    bottom: 60px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .container {
+    right: 2%;
+    bottom: 60px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .container {
+    right: 2%;
+    bottom: 78px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .container {
+    right: 2%;
+    bottom: 85px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    right: 2%;
+    bottom: 65px;
+  }
+}

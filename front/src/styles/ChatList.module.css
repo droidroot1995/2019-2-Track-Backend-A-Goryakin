@@ -1,0 +1,39 @@
+.chat_list {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  top: 0;
+
+  background: #fff;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.chats_list {
+  padding: 0.5em;
+
+  flex: 1 1 auto;
+  background: #fff;
+
+  display: flex;
+
+  flex-direction: column;
+
+  flex-flow: column wrap;
+  flex-wrap: nowrap;
+
+  overflow: auto;
+  justify-content: flex-start;
+
+  flex-grow: 1;
+  height: 87vh;
+}

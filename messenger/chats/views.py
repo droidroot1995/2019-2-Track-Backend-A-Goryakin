@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 
+from django.conf import settings
+
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http  import require_GET, require_POST
@@ -17,6 +19,8 @@ from chats.serializers import ChatSerializer, MemberSerializer, AttachmentSerial
 from rest_framework.decorators import action
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
+
+import requests
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
@@ -48,7 +52,7 @@ def chat_page(request):
     return JsonResponse({'chat': chat})
 
 
-@cache_page(60*15)
+@cache_page(60*5)
 @csrf_exempt
 @require_GET
 @login_required
@@ -92,7 +96,7 @@ def create_personal_chat(request):
     
     return JsonResponse({'chat': chat_json})
     
-@cache_page(60*15)    
+@cache_page(60*5)    
 @csrf_exempt
 @require_GET
 @login_required
@@ -167,13 +171,23 @@ def send_message(request):
         for member in members:
             member.new_messages += 1
             member.save()
+            
+        # msg_ws = {'id': message.id, 'chat_id': message.chat.id, 'user_id': message.user.id, 'content': message.content , 'added_at': message.added_at}
         
-        
-        return JsonResponse({'message': msg})
+        requests.post('http://localhost:8080/api', json={
+            "method": "publish",
+            "params": {
+                "channel": "chat" + str(message.chat.id),
+                "data": {
+                    'message': msg
+                }
+            }
+        }, headers={'Authorization': 'apikey ' + settings.CENTRIFUGE_API})
+        return JsonResponse({"result": {'message': msg}})
     
     return JsonResponse({'errors': form.errors}, status=400)
 
-@cache_page(60*15)
+
 @csrf_exempt
 @require_GET
 @login_required
@@ -334,14 +348,14 @@ class ChatsViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(chat, many=False)
         return Response({'chat': serializer.data})
     
-    @method_decorator(cache_page(60*15))
+    @method_decorator(cache_page(5))
     @action(methods=['get'], detail=False)
     def chat_list(self, request):
         chats = self.get_queryset()
         serializer = self.get_serializer(chats, many=True)
         return Response({'chat_list': serializer.data})
     
-    @method_decorator(cache_page(60*15))
+    @method_decorator(cache_page(5))
     @action(methods=['get'], detail=False)
     def user_chat_list(self, request):
         Member = apps.get_model('chats', 'Member')
@@ -383,7 +397,6 @@ class MessagesViewSet(viewsets.ModelViewSet):
     
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     
-    @method_decorator(cache_page(60*15))
     @action(methods=['get'], detail=False)
     def chat_messages_list(self, request):
         

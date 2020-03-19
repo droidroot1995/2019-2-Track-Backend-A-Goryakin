@@ -1,0 +1,135 @@
+.header {
+  flex: 1 1 8%;
+  background: #8e24aa;
+
+  color: #fff;
+  height: 13vh;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.return {
+  flex: 1 1 5%;
+
+  fill: #fff;
+  margin: 2%;
+
+  height: 50%;
+  align-self: center;
+}
+
+.return_button {
+  height: 100%;
+  width: 80%;
+  margin-top: 0;
+  margin-left: 10%;
+}
+
+.return:active {
+  background: #c23ee5;
+  transition: all 0.2s ease-out;
+}
+
+.header_text {
+  flex: 1 1 90%;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  fill: #fff;
+  padding: 20px;
+  align-self: center;
+}
+
+@media screen and (max-width: 389px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 25%;
+  }
+
+  .header_text {
+    flex: 1 1 50%;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 480px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .header_text {
+    flex: 1 1 80%;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .header_text {
+    flex: 1 1 80%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .header_text {
+    flex: 1 1 80%;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .return {
+    flex: 1 1 10%;
+  }
+
+  .header_text {
+    flex: 1 1 80%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header {
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  .return:hover {
+    fill: #d3d3d3;
+    transition: all 0.1s ease-out;
+  }
+
+  .return {
+    padding: 10px;
+    border-radius: 20px;
+  }
+}

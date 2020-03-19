@@ -1,0 +1,111 @@
+.profile {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  top: 0;
+
+  background: #fff;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  z-index: 0;
+}
+
+.profile_info {
+  padding: 0.5em;
+
+  flex: 1 1 auto;
+  background: #fff;
+
+  display: flex;
+
+  flex-direction: column;
+
+  flex-flow: column wrap;
+  flex-wrap: nowrap;
+
+  overflow: auto;
+  justify-content: flex-start;
+
+  flex-grow: 1;
+  height: 87vh;
+}
+
+.avatar {
+  border: 1px solid #000;
+  height: 80px;
+  width: 80px;
+
+  border-radius: 80px;
+  align-self: center;
+}
+
+.name_info {
+  background: #f0f0f0;
+  width: 90vw;
+  min-height: 80px;
+  max-height: 80px;
+  border-bottom: 2px solid #000;
+  align-self: center;
+  margin: 20px;
+}
+
+.name_input {
+  background: #f0f0f0;
+  width: 100%;
+  height: 70%;
+}
+
+.username_info {
+  width: 90vw;
+  min-height: 80px;
+  max-height: 80px;
+  align-self: center;
+  margin: 20px;
+}
+
+.username {
+  background: #f0f0f0;
+  border-bottom: 2px solid #000;
+  height: 90%;
+}
+
+.username_input {
+  background: #f0f0f0;
+  width: 100%;
+  height: 70%;
+}
+
+.bio_info {
+  width: 90vw;
+  min-height: 100px;
+  max-height: 100px;
+  align-self: center;
+  margin: 20px;
+}
+
+.bio {
+  background: #f0f0f0;
+  border-bottom: 2px solid #000;
+  height: 80%;
+}
+
+.bio_input {
+  background: #f0f0f0;
+  width: 100%;
+  height: 70%;
+  resize: none;
+}
+
+.hint {
+  color: #a9a9a9;
+}

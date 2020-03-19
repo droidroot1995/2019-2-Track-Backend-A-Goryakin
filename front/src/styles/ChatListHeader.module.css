@@ -1,0 +1,177 @@
+.header {
+  flex: 1 1 8%;
+  background: #8e24aa;
+
+  color: #fff;
+  height: 13vh;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.open_profile {
+  flex: 1 1 auto;
+  margin: 2%;
+  height: 50%;
+  align-self: center;
+  align-content: center;
+}
+
+.menu {
+  margin-left: 25%;
+  fill: #fff;
+  height: 100%;
+  align-self: center;
+}
+
+.menu:active {
+  background: #c23ee5;
+  transition: all 0.2s ease-out;
+}
+
+.soft_name {
+  flex: 1 1 90%;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  fill: #fff;
+  padding: 20px;
+  align-self: center;
+}
+
+.search {
+  flex: 1 1 5%;
+
+  fill: #fff;
+  margin: 2%;
+  height: 50%;
+  align-self: center;
+}
+
+.search:active {
+  background: #c23ee5;
+  transition: all 0.2s ease-out;
+}
+
+@media screen and (max-width: 389px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .open_profile {
+    flex: 1 1 25%;
+  }
+
+  .soft_name {
+    flex: 1 1 50%;
+  }
+
+  .search {
+    flex: 1 1 25%;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 480px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .open_profile {
+    flex: 1 1 10%;
+  }
+
+  .soft_name {
+    flex: 1 1 80%;
+  }
+
+  .search {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .open_profile {
+    flex: 1 1 10%;
+  }
+
+  .soft_name {
+    flex: 1 1 80%;
+  }
+
+  .search {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .open_profile {
+    flex: 1 1 10%;
+  }
+
+  .soft_name {
+    flex: 1 1 80%;
+  }
+
+  .search {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .header {
+    min-height: 90px;
+    max-height: 90px;
+  }
+
+  .open_profile {
+    flex: 1 1 10%;
+  }
+
+  .soft_name {
+    flex: 1 1 80%;
+  }
+
+  .search {
+    flex: 1 1 10%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .header {
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  .search:hover {
+    fill: #d3d3d3;
+    transition: all 0.1s ease-out;
+  }
+
+  .search {
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .menu:hover {
+    fill: #d3d3d3;
+    transition: all 0.1s ease-out;
+  }
+
+  .open_profile {
+    padding: 10px;
+    border-radius: 20px;
+  }
+}

@@ -77,6 +77,10 @@ CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
+CENTRIFUGE_ADDRESS = 'http://localhost:8080/api'
+CENTRIFUGE_SECRET = '1e5d7444-062c-4308-b138-7a1cab636160'
+CENTRIFUGE_API = 'e4eef5ce-58af-4511-9505-6c1c67dee4a9'
+
 ROOT_URLCONF = 'application.urls'
 
 
@@ -106,7 +110,7 @@ WSGI_APPLICATION = 'application.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'messenger_test', #'messenger',
+        'NAME': 'messenger', #'messenger_test', #'messenger',
         'USER': 'droidroot',
         'PASSWORD': '25091995',
         #'HOST':'database',
@@ -176,7 +180,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home' #'http://localhost:3000/list'  # 'home'
+LOGIN_REDIRECT_URL = 'http://192.168.0.107:3000/list' # 'http://localhost:3000/list'  # 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
 STATIC_URL = '/static/'

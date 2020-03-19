@@ -24,6 +24,7 @@ from main import views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^captcha/', include('captcha.urls')),
+    path('centrifugo/', views.centrifugo_token, name='centrifugo'),
     path('chats/', include('chats.urls')),
     path('csrf/', views.csrf, name='csrf'),
     path('users/', include('users.urls')),

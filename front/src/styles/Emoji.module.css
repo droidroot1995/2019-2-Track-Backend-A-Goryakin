@@ -1,0 +1,180 @@
+.smile {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/smiling-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.angry {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/angry-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.alien {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/alien.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.screaming {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-screaming-in-fear.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.kiss {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-blowing-a-kiss.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.fear {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/fearful-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.rolling_eyes {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-rolling-eyes.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.adult {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/adult.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.tongue {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-tongue.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.with_thermometer {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-thermometer.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.monocle {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-monocle.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.open_mouth {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: none;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-open-mouth.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.eyebrow {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-with-raised-eyebrow.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.flushed {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/flushed-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.confused {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/confused-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.clown {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/clown-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.crying {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/crying-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.expressionless {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/expressionless-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.dizzy {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/dizzy-face.png?sprite&retina@2x&retina@4x') no-repeat;
+}
+
+.vomiting {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  vertical-align: middle;
+  background: url('../assets/emoji/face-vomiting.png?sprite&retina@2x&retina@4x') no-repeat;
+}
