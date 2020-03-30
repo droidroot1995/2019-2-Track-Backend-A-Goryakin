@@ -20,6 +20,8 @@ from rest_framework.decorators import action
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
 
+from chats.tasks import send_email
+
 import requests
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -69,10 +71,21 @@ def chat_list(request):
 def create_personal_chat(request):
     Member = apps.get_model('chats', 'Member')
     Chat = apps.get_model('chats', 'Chat')
+    User = apps.get_model('users', 'User')
         
     uid  = request.user.id
     #uid  = int(request.POST['user_id'])
     target_user_id = int(request.POST['target_user_id'])
+    
+    user1 = User.objects.filter(id=uid).first()
+    user2 = User.objects.filter(id=target_user_id).first()
+    
+    recipients = []
+    if user1 != None and user1.email != '':
+        recipients.append(user1.email)
+        
+    if user2 != None and user2.email != '':
+        recipients.append(user2.email)
     
     member1_chat_set = set(Member.objects.filter(user_id=uid).values_list('chat_id'))
     member2_chat_set = set(Member.objects.filter(user_id=target_user_id).values_list('chat_id'))
@@ -94,9 +107,11 @@ def create_personal_chat(request):
     member1 = Member.objects.create(user_id=uid, chat_id=chat.id, new_messages=0)            
     member2 = Member.objects.create(user_id=target_user_id, chat_id=chat.id, new_messages=0)
     
+    send_email.delay('New chat created', settings.DEFAULT_FROM_EMAIL, recipients, 'New chat was created')
+    
     return JsonResponse({'chat': chat_json})
     
-@cache_page(60*5)    
+# @cache_page(60*5)    
 @csrf_exempt
 @require_GET
 @login_required
@@ -314,9 +329,20 @@ class ChatsViewSet(viewsets.ModelViewSet):
         
         Member = apps.get_model('chats', 'Member')
         Chat = apps.get_model('chats', 'Chat')
+        User = apps.get_model('users', 'User')
             
         uid  = request.user.id
         target_user_id = int(request.POST['target_user_id'])
+        
+        user1 = User.objects.filter(user_id=uid).first()
+        user2 = User.objects.filter(user_id=target_user_id).first()
+        
+        recipients = []
+        if user1.email != '':
+            recipients.append(user1.email)
+            
+        if user2.email != '':
+            recipients.append(user2.email)
         
         member1_chat_set = set(Member.objects.filter(user_id=uid).values_list('chat_id'))
         member2_chat_set = set(Member.objects.filter(user_id=target_user_id).values_list('chat_id'))
@@ -337,6 +363,8 @@ class ChatsViewSet(viewsets.ModelViewSet):
         
         member1 = Member.objects.create(user_id=uid, chat_id=chat.id, new_messages=0)            
         member2 = Member.objects.create(user_id=target_user_id, chat_id=chat.id, new_messages=0)
+        
+        send_email.delay('New chat created', 'droidroot.ttfs@gmail.com', recipients, 'New chat was created')
         
         return Response({'chat': serializer.data})
         

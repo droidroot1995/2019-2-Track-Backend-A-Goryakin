@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import sys
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -123,7 +124,7 @@ DATABASES = {
     }
 }
 
-#Cache
+# Cache
 
 CACHES = {
     'default': {
@@ -131,6 +132,45 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+# Email
+
+'''EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'droidroot1005@gmail.com'''
+
+'''EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'shadow1995@mail.ru'
+EMAIL_HOST_PASSWORD = '25.09.1995.'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = 'shadow1995@mail.ru'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL'''
+
+'''EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'alex-foxic'
+EMAIL_HOST_PASSWORD = 'dvlbfuukabvzljtc'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'alex-foxic@yandex.ru'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL'''
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'droidroot.ttfs@gmail.com'
+EMAIL_HOST_PASSWORD = 'viabeagcshnbgsjp' # 'droidroot_tt_fullstack1995'
+DEFAULT_FROM_EMAIL = 'droidroot.ttfs@gmail.com'
+#  DEFAULT_TO_EMAIL = 'droidroot.ttfs@gmail.com'
+
+# Administator list
+
+ADMINS = [('Droid','droidroot.ttfs@gmail.com'),]
 
 # File storage
 
@@ -175,6 +215,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+CELERY_BROKER_URL = 'redis://localhost:6379'  
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'  
+CELERY_ACCEPT_CONTENT = ['application/json']  
+CELERY_RESULT_SERIALIZER = 'json'  
+CELERY_TASK_SERIALIZER = 'json' 
+CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_BEAT_SCHEDULE = {
+    'user_counter': {
+        'task': 'users.tasks.users_counter',
+        'schedule': 30.0, # crontab(minute=59, hour=23),
+        'args': ()
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
