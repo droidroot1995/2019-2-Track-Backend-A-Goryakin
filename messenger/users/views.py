@@ -13,6 +13,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from users.serializers import UserSerializer
 from rest_framework.decorators import action
+
+from users.documents import UserDocument
 # Create your views here.
 
 
@@ -50,6 +52,15 @@ def search_users(request):
     User = apps.get_model('users', 'User')
     
     users = User.objects.filter(username__contains=request.GET['name']).values('id', 'username', 'first_name', 'avatar')[:int(request.GET['limit'])]
+    return JsonResponse({'users': list(users)})
+
+@csrf_exempt
+@require_GET
+#@login_required
+def search(request):
+    users = UserDocument.search().query('wildcard', username='*' + str(request.GET['name']) + '*')[:10]
+    users = users.to_queryset().values('username', 'first_name', 'avatar')
+    
     return JsonResponse({'users': list(users)})
 
 

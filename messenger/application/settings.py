@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'captcha',
+    'django_elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [
@@ -74,9 +75,9 @@ DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+CORS_ORIGIN_WHITELIST = ['https://localhost:3000', 'https://192.168.0.107:3000']
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['https://localhost:3000', 'https://192.168.0.107:3000']
 
 CENTRIFUGE_ADDRESS = 'http://localhost:8080/api'
 CENTRIFUGE_SECRET = '1e5d7444-062c-4308-b138-7a1cab636160'
@@ -226,6 +227,12 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'users.tasks.users_counter',
         'schedule': 30.0, # crontab(minute=59, hour=23),
         'args': ()
+    },
+}
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
     },
 }
 

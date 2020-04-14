@@ -12,6 +12,14 @@ services:
     volumes:
       - database_volume:/var/lib/postgresql/data
 
+  shotener_ms:
+    restart: always
+    build: ./url_shortener_service
+    volumes:
+      - ./url_shortener_service:/shortener_ms
+    networks:
+      - nginx_network
+
   messenger:
     restart: always
     build: .
@@ -29,6 +37,7 @@ services:
     ports:
       - 8000:443
       - 443:443
+      - 7000:7000
     volumes:
       - ./config/nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - ./config/certs/dev.crt:/messenger/dev.crt

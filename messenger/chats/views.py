@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http  import require_GET, require_POST
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 
 from chats.forms import ChatForm, MemberForm, MessageForm, AttachmentForm
@@ -20,9 +21,11 @@ from rest_framework.decorators import action
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication 
 
-from chats.tasks import send_email
+from chats.tasks import send_email, get_shortened_url, get_url_og
+from chats.documents import ChatDocument, MessageDocument
 
 import requests
+import json
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
@@ -130,6 +133,42 @@ def user_chat_list(request):
     
     return JsonResponse({'chats': chat_lst})
 
+@cache_page(60*5)
+@csrf_exempt
+@require_GET
+@login_required
+def shorten_url(request):
+    url = request.GET['url']
+    
+    res = cache.get(url)
+    
+    if res:
+        return JsonResponse({'url': res})
+    
+    res = json.loads(get_shortened_url.run(url))
+    
+    cache.set(url, res[url])
+    
+    return JsonResponse({'url': res[url]})
+
+@cache_page(60*5)
+@csrf_exempt
+@require_GET
+@login_required
+def url_opengraph(request):
+    url = request.GET['url']
+    
+    res = cache.get(f'{url}_og')
+    
+    if res:
+        return JsonResponse({'url': res})
+    
+    res = json.loads(get_url_og.run(url))
+    
+    cache.set(f'{url}_og', res[url])
+    
+    return JsonResponse({'url': res[url]})
+    
 
 @csrf_exempt
 @require_POST
@@ -255,6 +294,29 @@ def protected_file(request):
         return response
     else:
         return HttpResponse('<h1>File not found</h1>', status=404)
+    
+    
+@csrf_exempt
+@require_GET
+#@login_required
+def chats_search(request):
+    chats = ChatDocument.search().query('wildcard', topic='*' + str(request.GET['topic']) + '*')[:10]
+    chats = chats.to_queryset().values('topic', 'last_message')
+    
+    return JsonResponse({'chats': list(chats)})
+
+@csrf_exempt
+@require_GET
+@login_required
+def msg_search(request):
+    messages = MessageDocument.search().query('wildcard', content='*' + str(request.GET['content']) + '*')[:10]
+    
+    for hit in messages:
+        print(f'Username: {hit.user.first_name}, content: {hit.content}, chat id: {hit.chat.id}')
+    messages = messages.to_queryset().filter(chat_id = request.GET['chat_id']) # .values('user', 'content')
+    msgs = [{'first_name': msg.user.first_name, 'content': msg.content} for msg in messages]
+    
+    return JsonResponse({'messages': list(msgs)})
 
 
 class AttachmentsViewSet(viewsets.ModelViewSet):
